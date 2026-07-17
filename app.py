@@ -77,8 +77,10 @@ else:
             st.error(f"Não consegui processar as fotos: {e}")
 
 if items:
+    items = sorted(items, key=lambda it: it.name.strip().lower())
+
     st.subheader("Confirma os nomes antes de gerar")
-    st.caption("Podes corrigir qualquer nome ou tamanho de vaso diretamente na tabela.")
+    st.caption("As variedades estão ordenadas alfabeticamente. Podes corrigir qualquer nome ou tamanho de vaso diretamente na tabela.")
 
     edited_rows = []
     for i, it in enumerate(items):

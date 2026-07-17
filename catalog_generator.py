@@ -278,12 +278,15 @@ def render_page(page_items, logo, header_text, footer_text):
     return canvas
 
 
-def generate_catalog_pdf(items: List[CatalogItem], logo: "Image.Image", lang: str = "en") -> bytes:
+def generate_catalog_pdf(items: List[CatalogItem], logo: "Image.Image", lang: str = "en", sort_alphabetically: bool = True) -> bytes:
     """Returns PDF bytes for the full catalog."""
     lang = lang if lang in TEXT else "en"
     strings = TEXT[lang]
     iso = datetime.date.today().isocalendar()
     week, year = iso[1], iso[0]
+
+    if sort_alphabetically:
+        items = sorted(items, key=lambda it: it.name.strip().lower())
 
     pages_items = [items[i:i + PER_PAGE] for i in range(0, len(items), PER_PAGE)]
     total = len(pages_items)
